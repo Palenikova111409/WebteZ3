@@ -1,5 +1,6 @@
 let data = []
 let mobile = false
+let mobileLast = mobile
 
 window.onload = () => {
     fetch('./data.xml').then((response) => {
@@ -21,6 +22,101 @@ window.onload = () => {
                 })
 
             })
+
+            const smallDevice = window.matchMedia("(min-width: 576px)");
+
+            smallDevice.addListener(handleDeviceChange);
+
+            function handleDeviceChange(e) {
+                if (e.matches){
+                    mobileLast = mobile;
+                    mobile = false;
+                    console.log('In if');
+                    console.log(mobile)
+                    console.log(mobileLast);
+                }
+                else {
+                    mobileLast = mobile;
+                    mobile = true;
+                }
+                if (mobile != mobileLast){
+                    // Grouped bar chart
+                    let trace1 = {
+                        x: mobile ? ([data[0].a, data[1].a, data[2].a, data[3].a, data[4].a, data[5].a]) :
+                            ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]),
+                        y: mobile ? ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]) :
+                            ([data[0].a, data[1].a, data[2].a, data[3].a, data[4].a, data[5].a]),
+                        name: 'A',
+                        type: 'bar',
+                        orientation: mobile ? ('h') : ('v')
+                    };
+
+                    let trace2 = {
+                        x: mobile ? ([data[0].b, data[1].b, data[2].b, data[3].b, data[4].b, data[5].b]) :
+                            ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]),
+                        y: mobile ? ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]) :
+                            ([data[0].b, data[1].b, data[2].b, data[3].b, data[4].b, data[5].b]),
+                        name: 'B',
+                        type: 'bar',
+                        orientation: mobile ? ('h') : ('v')
+                    };
+
+                    let trace3 = {
+                        x: mobile ? ([data[0].c, data[1].c, data[2].c, data[3].c, data[4].c, data[5].c]) :
+                            ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]),
+                        y: mobile ? ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]) :
+                            ([data[0].c, data[1].c, data[2].c, data[3].c, data[4].c, data[5].c]),
+                        name: 'C',
+                        type: 'bar',
+                        orientation: mobile ? ('h') : ('v')
+                    };
+
+                    let trace4 = {
+                        x: mobile ? ([data[0].d, data[1].d, data[2].d, data[3].d, data[4].d, data[5].d]) :
+                            ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]),
+                        y: mobile ? ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]) :
+                            ([data[0].d, data[1].d, data[2].d, data[3].d, data[4].d, data[5].d]),
+                        name: 'D',
+                        type: 'bar',
+                        orientation: mobile ? ('h') : ('v')
+                    };
+
+                    let trace5 = {
+                        x: mobile ? ([data[0].e, data[1].e, data[2].e, data[3].e, data[4].e, data[5].e]) :
+                            ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]),
+                        y: mobile ? ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]) :
+                            ([data[0].e, data[1].e, data[2].e, data[3].e, data[4].e, data[5].e]),
+                        name: 'E',
+                        type: 'bar',
+                        orientation: mobile ? ('h') : ('v')
+                    };
+
+                    let trace6 = {
+                        x: mobile ? ([data[0].fx, data[1].fx, data[2].fx, data[3].fx, data[4].fx, data[5].fx]) :
+                            ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]),
+                        y: mobile ? ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]) :
+                            ([data[0].fx, data[1].fx, data[2].fx, data[3].fx, data[4].fx, data[5].fx]),
+                        name: 'FX',
+                        type: 'bar',
+                        orientation: mobile ? ('h') : ('v')
+                    };
+
+                    let trace7 = {
+                        x: mobile ? ([data[0].fn, data[1].fn, data[2].fn, data[3].fn, data[4].fn, data[5].fn]) :
+                            ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]),
+                        y: mobile ? ([data[0].year, data[1].year, data[2].year, data[3].year, data[4].year, data[5].year]) :
+                            ([data[0].fn, data[1].fn, data[2].fn, data[3].fn, data[4].fn, data[5].fn]),
+                        name: 'FN',
+                        type: 'bar',
+                        orientation: mobile ? ('h') : ('v')
+                    };
+
+                    let graphData = [trace1, trace2, trace3, trace4, trace5, trace6, trace7];
+
+                    let layout = {barmode: 'group'};
+                    Plotly.newPlot('groupedBar', graphData, layout, {responsive: true});
+                }
+            }
 
             // Grouped bar chart
             let trace1 = {

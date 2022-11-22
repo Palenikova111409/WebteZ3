@@ -166,8 +166,8 @@ window.onload = () => {
             };
             
             let lineData = [lineTrace1, lineTrace2];
-            let name = {title:'porovnanie A a FX z predmetu'};
-            Plotly.newPlot('line', lineData, name);
+            let name = {title:'Porovnanie A a FX z predmetu'};
+            Plotly.newPlot('line', lineData, name, {responsive: true});
         })
 
     })

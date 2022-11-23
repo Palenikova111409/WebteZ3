@@ -113,7 +113,11 @@ window.onload = () => {
 
                     let graphData = [trace1, trace2, trace3, trace4, trace5, trace6, trace7];
 
-                    let layout = {barmode: 'group'};
+                    let layout = {
+                        barmode: 'group',
+                        margin: {l: 100}
+                
+                    };
                     Plotly.newPlot('groupedBar', graphData, layout, {responsive: true});
                 }
             }
